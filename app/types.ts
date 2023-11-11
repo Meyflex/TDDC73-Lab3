@@ -4,6 +4,17 @@ export type Repository = {
     forks_count: number;
     stargazers_count: number;
     html_url: string;
+    description: string;
+    full_name: string;
+    license?: License;
+};
+
+export type License = {
+    key: string;
+    name: string;
+    spdx_id: string;
+    url: string;
+    node_id: string;
 };
 
 export type ApiResponse = {
@@ -15,4 +26,4 @@ export type ApiResponse = {
 export type RootStackParamList = {
     Home: undefined;
     Details: { repository: Repository }; // Define parameters for the Details screen
-  };
+};
