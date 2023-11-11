@@ -10,17 +10,20 @@ import axios from "axios";
 import { Repository, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import LanguagePicker from "../components/languagePicker";
 
 export default function Slider() {
     const [repositories, setRepositories] = useState<Repository[]>([]);
     const [page, setPage] = useState<number>(1);
+    const [language, setLanguage] = useState<string>("");
     const navigation =
         useNavigation<StackNavigationProp<RootStackParamList, "Home">>();
 
-    const getPostsData = (perPage: string, page: string) => {
+    const getPostsData = (perPage: string, page: string, language: string) => {
+        let languageStr = language === "" ? "" : `+language:${language}`;
         axios
             .get(
-                `https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=${perPage}&page=${page}`
+                `https://api.github.com/search/repositories?q=stars:>1${languageStr}&sort=stars&order=desc&per_page=${perPage}&page=${page}`
             )
             .then((response) => {
                 setRepositories((prevRepositories) => [
@@ -36,7 +39,13 @@ export default function Slider() {
     };
 
     useEffect(() => {
-        getPostsData("30", page.toString());
+        setPage(1);
+        setRepositories([]);
+        getPostsData("30", page.toString(), language);
+    }, [language]);
+
+    useEffect(() => {
+        getPostsData("30", page.toString(), language);
     }, [page]);
 
     const handleEndReached = () => {
@@ -67,6 +76,9 @@ export default function Slider() {
                 onEndReached={handleEndReached}
                 onEndReachedThreshold={0.5}
             />
+            <View style={styles.selectArea}>
+                <LanguagePicker setLanguage={setLanguage} />
+            </View>
         </View>
     );
 }
@@ -117,6 +129,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         backgroundColor: "#fbf695",
         color: "#0b0b0b",
+    },
+    selectArea: {
+        backgroundColor: "#657d8c",
+        width: "100%",
+        height: "10%",
     },
     // Additional styles can be added here
 });
