@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types";
+import { formatDate } from "../util";
 
 type DetailsRouteProp = RouteProp<RootStackParamList, "Details">;
 
@@ -25,12 +26,12 @@ const Details: React.FC<Props> = ({ route, navigation }) => {
           </Text>
         </View>
         <View style={styles.propContainer}>
-          <Text style={styles.prop}>Commits</Text>
-          <Text style={styles.prop}>PLACEHOLDER</Text>
+          <Text style={styles.prop}>Watchers Count</Text>
+          <Text style={styles.prop}>{repository.watchers_count}</Text>
         </View>
         <View style={styles.propContainer}>
-          <Text style={styles.prop}>Branches</Text>
-          <Text style={styles.prop}>PLACEHOLDER</Text>
+          <Text style={styles.prop}>Created At</Text>
+          <Text style={styles.prop}>{formatDate(repository.created_at)}</Text>
         </View>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>

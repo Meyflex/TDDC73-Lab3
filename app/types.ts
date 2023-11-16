@@ -7,6 +7,9 @@ export type Repository = {
     description: string;
     full_name: string;
     license?: License;
+    created_at: string;
+    watchers_count:number;
+
 };
 
 export type License = {

@@ -16,8 +16,7 @@ export default function Slider() {
     const [repositories, setRepositories] = useState<Repository[]>([]);
     const [page, setPage] = useState<number>(1);
     const [language, setLanguage] = useState<string>("");
-    const navigation =
-        useNavigation<StackNavigationProp<RootStackParamList, "Home">>();
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Home">>();
 
     const getPostsData = (perPage: string, page: string, language: string) => {
         let languageStr = language === "" ? "" : `+language:${language}`;
